@@ -2,12 +2,11 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 
-const DashboardLayout = () => import(/* webpackChunkName: "dashboard" */ '../components/dashboardLayout.vue')
+const DashboardLayout = () => import( '../components/dashboardLayout.vue')
 
 
 function loadView(view) {
-    return () => import(/* webpackChunkName: "view-
-[request]" */ `../components/dashboardContents/${view}.vue`)
+    return () => import( `../components/dashboardContents/${view}.vue`)
 }
 const routes = [
     {
@@ -18,9 +17,16 @@ const routes = [
                 name: 'UserController',
                 path: '',
                 component: loadView('userController')
+
+            },
+            {
+                name: 'VehicleController',
+                path: '/vehicle',
+                component: loadView('vehiclesController')
             }
-        ]
-    },
+        ],
+    },    
+    
  ]
  Vue.use(Router)
 
