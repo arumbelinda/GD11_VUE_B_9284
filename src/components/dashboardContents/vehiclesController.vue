@@ -168,16 +168,23 @@ export default {
     },
     methods:{
         getData(){
-            var uri = this.$apiUrl + '/vehicle'
-            this.$http.get(uri).then(response =>{
-                this.vehicles=response.data.message
-        })
+            const auth = {
+                headers: {Authorization: this.$cookie.get('TOKEN')} 
+            }
+            var uri = this.$apiUrl + '/vehicle' 
+            this.$http.get(uri,auth).then(response =>{ 
+                this.users=response.data.message 
+            }) 
     },
         sendData(){
             this.vehicle.append('merk', this.form.merk);
             this.vehicle.append('type', this.form.type);
             this.vehicle.append('licensePlate', this.form.licensePlate);
             this.vehicle.append('created_at', this.form.created_at);
+
+             const auth = {
+                headers: {Authorization: this.$cookie.get('TOKEN')} 
+            }
     
             var uri =this.$apiUrl + '/vehicle'
             this.load = true
@@ -185,6 +192,7 @@ export default {
                 this.snackbar = true; //mengaktifkan snackbar
                 this.color = 'green'; //memberi warna snackbar
                 this.text = response.data.message; //memasukkan pesan ke snackbar
+                
                 this.load = false;
                 this.dialog = false
                 this.getData(); //mengambil data vehicle
@@ -202,11 +210,16 @@ export default {
             this.vehicle.append('type', this.form.type);
             this.vehicle.append('licensePlate', this.form.licensePlate);
             this.vehicle.append('created_at', this.form.created_at);
+            const auth = {
+                headers: {Authorization: this.$cookie.get('TOKEN')} 
+            }
+            
             var uri = this.$apiUrl + '/vehicle/' + this.updatedId;
             this.load = true
             this.$http.post(uri,this.vehicle).then(response =>{
                 this.snackbar = true; //mengaktifkan snackbar this.color = 'green'; //memberi warna snackbar
                 this.text = response.data.message; //memasukkan pesan ke snackbar
+               
                 this.load = false;
                 this.dialog = false
                 this.getData(); //mengambil data vehicle
@@ -233,7 +246,12 @@ export default {
     },
         deleteData(deleteId){
             var uri=this.$apiUrl + '/vehicle/' + deleteId;
-            this.$http.delete(uri).then(response =>{
+            const auth = {
+                headers: {Authorization: this.$cookie.get('TOKEN')} 
+            }
+
+            
+            this.$http.delete(uri,auth).then(response =>{
                 this.snackbar=true;
                 this.text=response.data.message;
                 this.color='green'
@@ -250,7 +268,8 @@ export default {
         setForm(){
             if (this.typeInput === 'new') {
                 this.sendData()
-            } else { console.log("dddd")
+            } else {
+                console.log("dddd")
                 this.updateData()
             }
     },
@@ -259,7 +278,7 @@ export default {
                 merk : '',
                 type : '',
                 licensePlate : '',
-                created_at : '',
+                created_at : ''
             
             }
         }

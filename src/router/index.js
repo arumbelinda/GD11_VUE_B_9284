@@ -23,6 +23,16 @@ const routes = [
                 name: 'VehicleController',
                 path: '/vehicle',
                 component: loadView('vehiclesController')
+            },
+            {
+                name: 'LandingController',
+                path: '',
+                component: loadView('landingController')
+            },
+            {
+                name: 'LoginController',
+                path: '/login',
+                component: loadView('loginController')
             }
         ],
     },    
